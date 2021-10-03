@@ -1,0 +1,69 @@
+adam_eps: 0.00015
+agent:
+  class: drql.DRQLAgent
+  name: drql
+  params:
+    adam_eps: ${adam_eps}
+    batch_size: ${batch_size}
+    beta_1: ${beta_1}
+    beta_2: ${beta_2}
+    critic_cfg: ${critic}
+    critic_target_update_frequency: 1
+    critic_tau: 1.0
+    device: ${device}
+    discount: 0.99
+    double_q: false
+    encoder_cfg: ${encoder}
+    eval_eps: 0.05
+    lr: ${lr}
+    max_grad_norm: ${max_grad_norm}
+    multistep_return: 10
+    num_actions: ???
+    obs_shape: ???
+    prioritized_replay_beta0: 0.4
+    prioritized_replay_beta_steps: ${num_train_steps}
+    weight_decay: ${weight_decay}
+aug_type: none
+batch_size: 32
+beta_1: 0.9
+beta_2: 0.999
+critic:
+  class: drql.Critic
+  params:
+    aug_type: ${aug_type}
+    dueling: false
+    encoder_cfg: ${agent.params.encoder_cfg}
+    hidden_depth: ${hidden_depth}
+    hidden_dim: 512
+    image_pad: ${image_pad}
+    intensity_scale: ${intensity_scale}
+    num_actions: ${agent.params.num_actions}
+device: cuda
+encoder:
+  class: drql.Encoder
+  params:
+    obs_shape: ${agent.params.obs_shape}
+env: Breakout
+eval_frequency: 100000
+experiment: bench
+hidden_depth: 1
+image_pad: 4
+intensity_scale: 0.05
+log_frequency_step: 10000
+log_save_tb: true
+lr: 0.0001
+max_grad_norm: 10.0
+min_eps: 0.1
+num_eval_steps: 125000
+num_exploration_steps: 5000
+num_train_iters: 1
+num_train_steps: 100001
+prioritized_replay: false
+prioritized_replay_alpha: 0.6
+replay_buffer_capacity: ${num_train_steps}
+save_train_video: false
+save_video: true
+seed: 1
+start_training_steps: 1600
+terminal_on_life_loss: true
+weight_decay: 0.0
